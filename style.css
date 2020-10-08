@@ -1,0 +1,24 @@
+/*
+  Name: Tammy Liu
+  Email Address: Tammy_Liu@student.uml.edu
+  Affliation: University of Massachusetts Lowell Computer Science Student
+  File: cs.uml.edu/~tliu/
+  COMP.4610-201 (91.61) GUI Programming I Assignment: Creating Your First Web Page
+  Copyright (c) September 8th 2020 by Tammy Liu. All rights reserved. May be
+  freely copied or excerpted for educational purposes with credit to the author.
+  Sources: W3Schools, Brad Traversy (youtube video creator), GIF found using google images
+*/
+
+.header{/*changes the features and placement to the header of the page*/
+  background: url("images/headerbgimage.gif") no-repeat center;
+  background-size: cover;
+}
+
+.pgbg{/*changes to the background*/
+  background: url("images/shootingstar3.gif") no-repeat center;
+  background-size: cover;
+}
+
+html,body{
+  min-height: 100%;
+}

@@ -1,0 +1,24 @@
+Name: Tammy Liu
+Email Address: Tammy_Liu@student.uml.edu
+Affliation: University of Massachusetts Lowell Computer Science Student
+File: cs.uml.edu/~tliu/
+COMP.4610-201 (91.61) GUI Programming I Assignment: Creating Your First Web Page
+Copyright (c) September 8th 2020 by Tammy Liu. All rights reserved. May be
+freely copied or excerpted for educational purposes with credit to the author.
+Sources: W3Schools, Brad Traversy (youtube video creator), GIF found using google images
+
+Link to styles site:
+Link to HW 2: http://cs.uml.edu/~tliu 
+Link to HW 4: http://cs.uml.edu/~tliu/HW4
+
+I have used a provided theme fror bootswatch called pulse (https://bootswatch.com/pulse/). 
+I have also used many different class types:
+- there is added responsiveness of the navbar. It collapse into a drop down list if the 
+  window size of browser is minimized. It shows the complete navbar if the window size 
+  is maximized. 
+- the navi items shows when a webpage is active by being the color white. 
+- the nav bar is sticky so it is displayed under the banner but will move to the top of 
+  the page if you scroll beyond the initial area.
+- the colors are better due to the theme from bootswatch.
+- the corners of the body container is rounded
+- the spacing for the label and input on the contact form is more aligned and in the same row.
