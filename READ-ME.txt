@@ -11,6 +11,9 @@ Link to styles site:
 Link to HW 2: http://cs.uml.edu/~tliu 
 Link to HW 4: http://cs.uml.edu/~tliu/HW4
 
+Link to GitHub site:
+https://tammyliuxd.github.io/Graphical-User-Interface/
+
 I have used a provided theme fror bootswatch called pulse (https://bootswatch.com/pulse/). 
 I have also used many different class types:
 - there is added responsiveness of the navbar. It collapse into a drop down list if the 
