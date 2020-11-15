@@ -4,7 +4,7 @@
   Affliation: University of Massachusetts Lowell Computer Science Student
   File: cs.uml.edu/~tliu/HW5
   COMP.4610-201 (91.61) GUI Programming I Assignment: Creating an Interactive Dynamic Table
-  source: getbootstrap.com, bootswatch.com, css-tricks.com, youtube.com (Brad Traversy), jqueryvalidation.org, jesseheines.com
+  source: getbootstrap.com, bootswatch.com, css-tricks.com, youtube.com (Brad Traversy), jqueryvalidation.org, jesseheines.com, https://jesseheines.com/~heines/
 */
 
 let tabID = 2; //Tab1 is located in HTML so newTab starts at 2.
