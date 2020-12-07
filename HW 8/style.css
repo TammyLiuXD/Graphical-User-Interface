@@ -1,0 +1,88 @@
+/*
+  Name: Tammy Liu
+  Email Address: Tammy_Liu@student.uml.edu
+  Affliation: University of Massachusetts Lowell Computer Science Student
+  File: cs.uml.edu/~tliu/HW5
+  COMP.4610-201 (91.61) GUI Programming I Assignment: Implementing a Bit of Scrabble with Drag-and-Drop
+  source: getbootstrap.com, bootswatch.com, css-tricks.com, youtube.com (Brad Traversy), jqueryvalidation.org, Jesse M. Heines (heines@cs.uml.edu), stackoverflow.com
+*/
+
+.header{/*changes the features and placement to the header of the page*/
+  background: url("images/headerbgimage.gif") no-repeat center;
+  background-size: cover;
+}
+
+.pgbg{/*changes to the background*/
+  background: url("images/shootingstar3.gif") no-repeat center;
+  background-size: cover;
+}
+
+html,body{
+  min-height: 100%;
+}
+
+/*positioning for the tiles on the tray*/
+.position1{
+  top: 30px;
+  left: 45px;
+}
+
+.position2{
+  top: 30px;
+  left: 80px;
+}
+
+.position3{
+  top: 30px;
+  left: 115px;
+}
+
+.position4{
+  top: 30px;
+  left: 150px;
+}
+
+.position5{
+  top: 30px;
+  left: 185px;
+}
+
+.position6{
+  top: 30px;
+  left: 220px;
+}
+
+.position7{
+  top: 30px;
+  left: 255px;
+}
+
+/*Board display*/
+.board {
+  width: 600px;
+  height: 600px;
+}
+
+/*Tray display*/
+.tray {
+  width: 320px;
+  height: 91px;
+}
+
+/*Scrabble bag display*/
+.swap {
+  width: 90px;
+  height: 90px;
+}
+
+/*letter display and positioning*/
+.letter, .played-letter {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  z-index: 1;
+}
+
+.scoreWord {
+  font-size: 20px;
+}

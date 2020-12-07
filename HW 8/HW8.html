@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!--
+  Name: Tammy Liu
+  Email Address: Tammy_Liu@student.uml.edu
+  Affliation: University of Massachusetts Lowell Computer Science Student
+  File: cs.uml.edu/~tliu/HW5
+  COMP.4610-201 (91.61) GUI Programming I Assignment: Implementing a Bit of Scrabble with Drag-and-Drop
+  source: getbootstrap.com, bootswatch.com, css-tricks.com, youtube.com (Brad Traversy), jqueryvalidation.org, Jesse M. Heines (heines@cs.uml.edu), stackoverflow.com
+-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Interactive Dynamic Table</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/pulse/bootstrap.min.css" integrity="sha384-L7+YG8QLqGvxQGffJ6utDKFwmGwtLcCjtwvonVZR/Ba2VzhpMwBz51GaXnUsuYbj" crossorigin="anonymous"> <!-- Theme taken from https://bootswatch.com/pulse/ -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="main.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+  </head>
+
+  <body class="pgbg">
+    <h1 class="header mx-auto w-75 text-white border border-white p-3 text-center my-4">Welcome to Tammy's Website</h1>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-primary sticky-top">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto"> <!--Navigation Bar-->
+          <!--This helps navigate to different sections of my website.-->
+          <li class="nav-item"><a class="nav-link" href="http://cs.uml.edu/~tliu/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="http://cs.uml.edu/~tliu/HW3">HW3</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://tammyliuxd.github.io/Graphical-User-Interface/HW4.html">HW4</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://tammyliuxd.github.io/Graphical-User-Interface/HW%205/HW5.html">HW5</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://tammyliuxd.github.io/Graphical-User-Interface/HW%206/HW6.html">HW6</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://tammyliuxd.github.io/Graphical-User-Interface/HW%207/HW7.html">HW7</a></li>
+          <li class="nav-item active"><a class="nav-link" href="https://tammyliuxd.github.io/Graphical-User-Interface/HW%207/HW8.html">HW8</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://tammyliuxd.github.io/Graphical-User-Interface/contactme.html">Contact Me</a></li>
+         </ul>
+       </div>
+    </nav>
+
+    <div class="container m-0 mt-3 p-0">
+
+      <!--Error handling message container-->
+      <div class="container" id="errorPopUp" style="visibility: hidden">
+        <div class="alert alert-danger w-50">
+          <h3>ERROR!</h3>
+          <p>. . .</p>
+        </div>
+      </div>
+
+      <!--board container: displays board-->
+      <div class="col-sm-12 col-lg-6">
+        <img class="board" src="graphics_data/board2.jpg">
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <!--tray: displays tray-->
+          <div class="position-relative" id="trayContainer">
+            <img class="tray p-3" src="graphics_data/holder.png">
+          </div>
+          <!--Swap Tiles area-->
+          <div class="col-1 m-0 position-relative">
+            <img class="swap" src="graphics_data/bag.jpg">
+          </div>
+          <!--Word and Score count: keep track of the score and notifies you the word played this turn-->
+          <div class="col-2 position-relative">
+            <label class="scoreWord bg-success p-1 ml-5">Score: 0</label>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="col-sm-4 col-lg-4">
+        <!-- Word Submission button-->
+        <button id="submit" type="submit" name="submit">Submit WORD</button>
+        <!-- Tile Recall button-->
+        <button id="recall" class="ml-2" name="recall">RECALL Tiles</button>
+        <!-- Reset Board button-->
+        <button id="reset" class="ml-2" name="reset" data-toggle="modal" data-target="#confirmChange">RESET Board</button>
+      </div>
+
+      <br>
+
+    <!--Table container for tracking the Letter Remaining in bag-->
+      <div class="container">
+        <table class="table w-50 table-success table-bordered" id="lrTable">
+          <th colspan="9">Letters Remaining in Bag</th>
+          <tr>
+            <td class="lr-A">A: 9</td>
+            <td class="lr-B">B: 2</td>
+            <td class="lr-C">C: 2</td>
+            <td class="lr-D">D: 4</td>
+            <td class="lr-E">E: 12</td>
+            <td class="lr-F">F: 2</td>
+            <td class="lr-G">G: 3</td>
+            <td class="lr-H">H: 2</td>
+            <td class="lr-I">I: 9</td>
+          </tr>
+          <tr>
+            <td class="lr-J">J: 1</td>
+            <td class="lr-K">K: 1</td>
+            <td class="lr-L">L: 4</td>
+            <td class="lr-M">M: 2</td>
+            <td class="lr-N">N: 6</td>
+            <td class="lr-O">O: 8</td>
+            <td class="lr-P">P: 2</td>
+            <td class="lr-Q">Q: 1</td>
+            <td class="lr-R">R: 6</td>
+          </tr>
+          <tr>
+            <td class="lr-S">S: 4</td>
+            <td class="lr-T">T: 6</td>
+            <td class="lr-U">U: 4</td>
+            <td class="lr-V">V: 2</td>
+            <td class="lr-W">W: 2</td>
+            <td class="lr-X">X: 1</td>
+            <td class="lr-Y">Y: 2</td>
+            <td class="lr-Z">Z: 1</td>
+            <td class="lr-_">_: 2</td>
+          </tr>
+        </table>
+      </div>
+
+      <!--Modal for RESET board-->
+      <div class="modal fade" id="confirmChange" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Are you sure you want to RESET the board?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                  <p>Resetting the board will start the game all over again.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  <button type="button" class="btn btn-primary" id="startOver">Yes</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Modal to handle Blank tiles: user inputs what letter the blank tile represents (must be a character not a number)-->
+      <div class="modal fade" id="idBlankLetter" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">What Letter do you want this BLANK TILE to be?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                  <input type="text" id="idLetter" maxlength="1">
+                  <div class="alert alert-danger" style="visibility: hidden">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary" id="subLetter">Submit</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
