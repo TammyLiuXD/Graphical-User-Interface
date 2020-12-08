@@ -412,6 +412,7 @@ let totalScore = 0; //keeps track of the total score for Scrabble
 let words = []; //use to hold a list of recognize words
 
 $(function () {
+  getWords();
   setUpTray();
   setUpTiles();
 
@@ -484,20 +485,31 @@ $(function () {
       setError("You have not played any tiles.");
       return;
     }
+
+    let invalidWords = checkWords();
+    console.log(invalidWords);
+    if(invalidWords.length !== 0) {
+      setError("These are not valid words: " + invalidWords.join(", ")); //takes a list and joins them
+      return;
+    }
+
     console.log(scorePlay());
     totalScore += scorePlay();
     document.querySelector(".scoreWord").innerText = "Score: " + totalScore;
     let playedTiles = document.querySelectorAll("[data-board='1']");
+
     for (let i = 0; i < playedTiles.length; i++) {
       playedTiles[i].removeAttribute("data-board");
       playedTiles[i].className = "played-letter";
       $(playedTiles[i]).draggable("disable");
     }
+
     let remainingTiles = document.querySelectorAll(".letter");
     for (let i = 0; i < remainingTiles.length; i++) {
       remainingTiles[i].className = "position" + (i+1) + " letter";
       remainingTiles[i].style = "";
     }
+
     for (let i = remainingTiles.length; i < 7; i++) {
       letter = drawTile();
       if (letter === null) {
@@ -1186,8 +1198,96 @@ function defBlankLetter() {
 
 function getWords(){
   $.get('https://tammyliuxd.github.io/Graphical-User-Interface/HW%208/words.txt').done(function(resp) {
-    words = resp.split("\n").filter(function (el) {return el.length !== 0; }); //split into a list of words, filtering empty strings out of the list
-    console.log(words.length);
+    words = resp.split("\n").filter(function(el) {return el.length !== 0;}).map(function(el) {return el.toUpperCase();}); //split into a list of words, filtering empty strings out of the list
+    console.log("loaded");
   });
+}
 
+function checkWords() {
+  let playDirection;
+  let invalid = [];
+
+  if (currentPlays.length > 1) {
+    //checks if the letters are being played in a vertical line
+    if (currentPlays[0].x === currentPlays[1].x) {
+      invalid = invalid.concat(checkVerticalWord(currentPlays[0].x, currentPlays[0].y)); //if true word is played vertically so call this
+      playDirection = 'vertical';
+    } else {
+      invalid = invalid.concat(checkHorizontalWord(currentPlays[0].x, currentPlays[0].y)); //if false word is played horizontally so call this
+      playDirection = 'horizontal';
+    }
+  } else {
+    if(isHorizontalWord(currentPlays[0].x, currentPlays[0].y)) {
+      invalid = invalid.concat(checkHorizontalWord(currentPlays[0].x, currentPlays[0].y)); //if false word is played horizontally so call this
+      playDirection = 'horizontal';
+    } else {
+      invalid = invalid.concat(checkVerticalWord(currentPlays[0].x, currentPlays[0].y)); //if true word is played vertically so call this
+      playDirection = 'vertical';
+    }
+  }
+
+  for(let i = 0; i < currentPlays.length; i++){
+    //checking if we checked vertically already. if yes, check the horizontal word
+    if(playDirection === 'vertical' && isHorizontalWord(currentPlays[i].x, currentPlays[i].y)) {
+      invalid = invalid.concat(checkHorizontalWord(currentPlays[i].x, currentPlays[i].y));
+    }
+    //checking if we checked horizontally already. if yes, check the verical word
+    if(playDirection === 'horizontal' && isVerticalWord(currentPlays[i].x, currentPlays[i].y)) {
+      invalid = invalid.concat(checkVerticalWord(currentPlays[i].x, currentPlays[i].y));
+    }
+  }
+
+  return invalid;
+}
+
+function checkHorizontalWord(x,y) {
+  let word = boardState[x][y];
+
+  for (let i = x - 1; i >= 0; i--) {
+    //board is empty, stop looking in this direction
+    if (!boardState[i][y]) {
+      break;
+    }
+    word = boardState[i][y] + word; //prepending the next letter onto the start of the word
+  }
+
+  for (let i = x + 1; i <= 14; i++) {
+    //board is empty, stop looking in this direction
+    if (!boardState[i][y]) {
+      break;
+    }
+    word = word + boardState[i][y]; //appending the next letter onto the end of the word
+  }
+
+  if(words.indexOf(word) === -1) {
+    return [word];
+  }
+
+  return [];
+}
+
+function checkVerticalWord(x,y) {
+  let word = boardState[x][y];
+
+  for (let i = y - 1; i >= 0; i--) {
+    //board is empty, stop looking in this direction
+    if (!boardState[x][i]) {
+      break;
+    }
+    word = boardState[x][i] + word; //prepending the next letter onto the start of the word
+  }
+
+  for (let i = y+ 1; i <= 14; i++) {
+    //board is empty, stop looking in this direction
+    if (!boardState[x][i]) {
+      break;
+    }
+    word = word + boardState[x][i]; //appending the next letter onto the end of the word
+  }
+
+  if(words.indexOf(word) === -1) {
+    return [word];
+  }
+
+  return [];
 }
