@@ -181,6 +181,7 @@ $(function () {
     drop: function (event, ui) {
       let position = tileSnap(ui.position.left, ui.position.top);
       let error = validateMove(position.x, position.y, ui.helper);
+
       if (error !== null) {
         setError(error);
         ui.helper.draggable("option", "revert", true);
@@ -193,6 +194,7 @@ $(function () {
       currentPlays.push({ x: position.x, y: position.y });
       boardState[position.x][position.y] = ui.helper.attr("data-letter");
       ui.helper.css({ top: position.top, left: position.left });
+
       if (ui.helper.attr("data-letter") === "_") {
         $("#idBlankLetter").modal("show"); //shows the modal
       }
@@ -211,16 +213,19 @@ $(function () {
 
   //makes the tray droppable; allows letters to drop in the tray
   $(".tray").droppable({
+    //out when the draggable is no longer over the droppable
     out: function (event, ui) {
-      //out when the draggable is no longer over the droppable
       ui.helper.removeAttr("data-tray");
     },
+
+    //over when the dragglable is on top of the droppable
     over: function (event, ui) {
-      //over when the dragglable is on top of the droppable
       ui.helper.attr("data-tray", "1");
     },
+
     drop: function (event, ui) {
       let error = validateMove(undefined, undefined, ui.helper);
+
       if (error !== null) {
         setError(error);
         ui.helper.draggable("option", "revert", true);
@@ -245,6 +250,7 @@ $(function () {
     }
 
     let invalidWords = checkWords();
+
     if (invalidWords.length !== 0) {
       setError("These are not valid words: " + invalidWords.join(", ")); //takes a list and joins them
       return;
@@ -261,6 +267,7 @@ $(function () {
     }
 
     let remainingTiles = document.querySelectorAll(".letter");
+
     for (let i = 0; i < remainingTiles.length; i++) {
       remainingTiles[i].className = "position" + (i + 1) + " letter";
       remainingTiles[i].style = "";
@@ -292,7 +299,8 @@ $(function () {
   $("#idBlankLetter").on("hide.bs.modal", function () {
     let findBlanks = document.querySelectorAll(
       '[data-board="1"][data-letter="_"]'
-    ); //when data-baord is true and the letter is blank.
+    ); //when data-board is true and the letter is blank.
+
     for (let i = 0; i < findBlanks.length; i++) {
       //this blank does not have a letter defined with it, so it must be the letter that was played
       if (findBlanks[i].dataset.defLetter === undefined) {
@@ -300,7 +308,7 @@ $(function () {
         findBlanks[i].removeAttribute("data-x"); //resets the x coordinate of the letter
         findBlanks[i].removeAttribute("data-y");
         findBlanks[i].removeAttribute("data-board");
-        findBlanks[i].removeAttribute("data-defLetter");
+        findBlanks[i].removeAttribute("data-def-letter");
         document.querySelector(
           "#idBlankLetter .alert-danger"
         ).style.visibility = "hidden";
@@ -317,8 +325,8 @@ function tileSnap(left, top) {
   let x = Math.round((left - 23) / 39.5); //calculates the x position, rounding it if it is a decimal
   let y = Math.round((top - -593) / 39.5); //calculates the y position, rounding it if it is a decimal
 
+  //checks the value of x and sets it
   if (x < 0) {
-    //checks the value of x and sets it
     x = 0;
   }
   if (x > 14) {
@@ -326,8 +334,8 @@ function tileSnap(left, top) {
   }
   left = x * 39.5 + 23; //calculates the x position
 
+  //checks the value of y and sets it
   if (y < 0) {
-    //checks the value of y and sets it
     y = 0;
   }
   if (y > 14) {
@@ -338,7 +346,7 @@ function tileSnap(left, top) {
   return { left, top, x, y };
 }
 
-/*draws tile if there is a tile to be drawn, it will be at random if there is not a tile to be drawn, it will return null*/
+//draws tile if there is a tile to be drawn, it will be at random if there is not a tile to be drawn, it will return null
 function drawTile() {
   let tileCount = 0;
   for (let i = 0; i < 27; i++) {
@@ -420,6 +428,7 @@ function validateMove(x, y, letter) {
     } else {
       return "Please play your tiles in a line.";
     }
+
     //if the above checks fail, we return the wordError Statement.
     if (wordError) {
       return wordError;
@@ -700,6 +709,7 @@ function scoreVerticalWord(x, y) {
 function scorePlay() {
   let playDirection;
   let score = 0;
+
   if (currentPlays.length > 1) {
     //checks if the letters are being played in a vertical line
     if (currentPlays[0].x === currentPlays[1].x) {
@@ -727,6 +737,7 @@ function scorePlay() {
     ) {
       score += scoreHorizontalWord(currentPlays[i].x, currentPlays[i].y);
     }
+
     //checking if we scored horizontally already. if yes, score the vericsl word
     if (
       playDirection === "horizontal" &&
@@ -870,13 +881,15 @@ function justPlayed(x, y) {
 function recallTiles() {
   let letters = document.querySelectorAll(".letter");
   let i;
+
   for (i = 0; i < letters.length; i++) {
     letters[i].style = ""; //resets the letters
     letters[i].removeAttribute("data-x"); //resets the x coordinate of the letter
     letters[i].removeAttribute("data-y");
     letters[i].removeAttribute("data-board");
-    letters[i].removeAttribute("data-defLetter");
+    letters[i].removeAttribute("data-def-letter");
   }
+
   for (i = 0; i < currentPlays.length; i++) {
     boardState[currentPlays[i].x][currentPlays[i].y] = null;
   }
@@ -889,6 +902,7 @@ function resetGame() {
 
   //reset games state
   let letters = document.querySelectorAll(".letter, .played-letter");
+
   for (i = 0; i < letters.length; i++) {
     letters[i].parentNode.removeChild(letters[i]);
   }
@@ -973,6 +987,7 @@ function defBlankLetter() {
     let findBlanks = document.querySelectorAll(
       '[data-board="1"][data-letter="_"]'
     ); //when data-baord is true and the letter is blank.
+
     for (let i = 0; i < findBlanks.length; i++) {
       //this blank does not have a letter defined with it, so it must be the letter that was played
       if (findBlanks[i].dataset.defLetter === undefined) {
@@ -1063,14 +1078,15 @@ function checkWords() {
 }
 
 function checkHorizontalWord(x, y) {
-  let word = boardState[x][y];
+  let word = getLetter(x, y);
 
   for (let i = x - 1; i >= 0; i--) {
     //board is empty, stop looking in this direction
     if (!boardState[i][y]) {
       break;
     }
-    word = boardState[i][y] + word; //prepending the next letter onto the start of the word
+
+    word = getLetter(i, y) + word; //prepending the next letter onto the start of the word
   }
 
   for (let i = x + 1; i <= 14; i++) {
@@ -1078,7 +1094,7 @@ function checkHorizontalWord(x, y) {
     if (!boardState[i][y]) {
       break;
     }
-    word = word + boardState[i][y]; //appending the next letter onto the end of the word
+    word = word + getLetter(i, y); //appending the next letter onto the end of the word
   }
 
   if (words.indexOf(word) === -1) {
@@ -1089,14 +1105,14 @@ function checkHorizontalWord(x, y) {
 }
 
 function checkVerticalWord(x, y) {
-  let word = boardState[x][y];
+  let word = getLetter(x, y);
 
   for (let i = y - 1; i >= 0; i--) {
     //board is empty, stop looking in this direction
     if (!boardState[x][i]) {
       break;
     }
-    word = boardState[x][i] + word; //prepending the next letter onto the start of the word
+    word = getLetter(x, i) + word; //prepending the next letter onto the start of the word
   }
 
   for (let i = y + 1; i <= 14; i++) {
@@ -1104,7 +1120,7 @@ function checkVerticalWord(x, y) {
     if (!boardState[x][i]) {
       break;
     }
-    word = word + boardState[x][i]; //appending the next letter onto the end of the word
+    word = word + getLetter(x, i); //appending the next letter onto the end of the word
   }
 
   if (words.indexOf(word) === -1) {
@@ -1112,4 +1128,13 @@ function checkVerticalWord(x, y) {
   }
 
   return [];
+}
+
+function getLetter(x, y) {
+  //check is the tile is _
+  if(boardState[x][y] !== "_"){
+    return boardState[x][y];
+  }
+  //otherwise we get the letter that is assigned to the blank tiles
+  return document.querySelector("[data-x='" + x + "'][data-y='" + y + "']").dataset.defLetter;
 }
