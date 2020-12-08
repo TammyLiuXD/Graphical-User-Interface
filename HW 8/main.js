@@ -487,13 +487,11 @@ $(function () {
     }
 
     let invalidWords = checkWords();
-    console.log(invalidWords);
     if(invalidWords.length !== 0) {
       setError("These are not valid words: " + invalidWords.join(", ")); //takes a list and joins them
       return;
     }
 
-    console.log(scorePlay());
     totalScore += scorePlay();
     document.querySelector(".scoreWord").innerText = "Score: " + totalScore;
     let playedTiles = document.querySelectorAll("[data-board='1']");
@@ -1199,7 +1197,6 @@ function defBlankLetter() {
 function getWords(){
   $.get('https://tammyliuxd.github.io/Graphical-User-Interface/HW%208/words.txt').done(function(resp) {
     words = resp.split("\n").filter(function(el) {return el.length !== 0;}).map(function(el) {return el.toUpperCase();}); //split into a list of words, filtering empty strings out of the list
-    console.log("loaded");
   });
 }
 
