@@ -409,6 +409,7 @@ let boardState = [
 
 let currentPlays = []; //tracks x-coordinate, y-coordinate in current play
 let totalScore = 0; //keeps track of the total score for Scrabble
+let words = []; //use to hold a list of recognize words
 
 $(function () {
   setUpTray();
@@ -1181,4 +1182,12 @@ function defBlankLetter() {
     }
   document.querySelector("#idBlankLetter .alert-danger").innerText = "That is not a valid letter.";
   document.querySelector("#idBlankLetter .alert-danger").style.visibility = 'visible';
+}
+
+function getWords(){
+  $.get('https://tammyliuxd.github.io/Graphical-User-Interface/HW%208/words.txt').done(function(resp) {
+    words = resp.split("\n").filter(function (el) {return el.length !== 0; }); //split into a list of words, filtering empty strings out of the list
+    console.log(words.length);
+  });
+
 }
