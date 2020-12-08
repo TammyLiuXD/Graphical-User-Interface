@@ -150,261 +150,21 @@ function buildTiles() {
 let ScrabbleTiles = buildTiles();
 
 let boardState = [
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
-  [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
 ];
 
 let currentPlays = []; //tracks x-coordinate, y-coordinate in current play
@@ -416,7 +176,7 @@ $(function () {
   setUpTray();
   setUpTiles();
 
-//makes the board droppable; allows letters to drop in the board
+  //makes the board droppable; allows letters to drop in the board
   $(".board").droppable({
     drop: function (event, ui) {
       let position = tileSnap(ui.position.left, ui.position.top);
@@ -431,11 +191,9 @@ $(function () {
       ui.helper.attr("data-x", position.x); //tracks the x position of a tile
       ui.helper.attr("data-y", position.y); //tracks the y position of a tile
       currentPlays.push({ x: position.x, y: position.y });
-      boardState[position.x][position.y] = ui.helper.attr(
-        "data-letter"
-      );
+      boardState[position.x][position.y] = ui.helper.attr("data-letter");
       ui.helper.css({ top: position.top, left: position.left });
-      if(ui.helper.attr("data-letter") === "_"){
+      if (ui.helper.attr("data-letter") === "_") {
         $("#idBlankLetter").modal("show"); //shows the modal
       }
     },
@@ -448,10 +206,10 @@ $(function () {
     //over when the dragglable is on top of the droppable
     over: function (event, ui) {
       ui.helper.attr("data-board", "1");
-    }
+    },
   });
 
-//makes the tray droppable; allows letters to drop in the tray
+  //makes the tray droppable; allows letters to drop in the tray
   $(".tray").droppable({
     out: function (event, ui) {
       //out when the draggable is no longer over the droppable
@@ -470,14 +228,14 @@ $(function () {
         return;
       }
       setError();
-    }
+    },
   });
 
-//makes the bag droppable for swaping out tiles
+  //makes the bag droppable for swaping out tiles
   $(".swap").droppable({
     drop: function (event, ui) {
       swapTile(ui.helper[0]);
-    }
+    },
   });
 
   document.querySelector("#submit").addEventListener("click", function () {
@@ -487,7 +245,7 @@ $(function () {
     }
 
     let invalidWords = checkWords();
-    if(invalidWords.length !== 0) {
+    if (invalidWords.length !== 0) {
       setError("These are not valid words: " + invalidWords.join(", ")); //takes a list and joins them
       return;
     }
@@ -504,7 +262,7 @@ $(function () {
 
     let remainingTiles = document.querySelectorAll(".letter");
     for (let i = 0; i < remainingTiles.length; i++) {
-      remainingTiles[i].className = "position" + (i+1) + " letter";
+      remainingTiles[i].className = "position" + (i + 1) + " letter";
       remainingTiles[i].style = "";
     }
 
@@ -514,7 +272,7 @@ $(function () {
         break;
       }
       img = document.createElement("img");
-      img.className = "position" + (i+1) + " letter";
+      img.className = "position" + (i + 1) + " letter";
       img.src = "graphics_data/letters/Scrabble_Tile_" + letter + ".jpg";
       img.dataset.letter = letter;
       document.querySelector("#trayContainer").appendChild(img);
@@ -526,11 +284,15 @@ $(function () {
 
   document.querySelector("#recall").addEventListener("click", recallTiles);
   document.querySelector("#startOver").addEventListener("click", resetGame);
-  document.querySelector("#subLetter").addEventListener("click", defBlankLetter);
+  document
+    .querySelector("#subLetter")
+    .addEventListener("click", defBlankLetter);
 
   //if you leave modal without defining the letter, the letter will return to tray
-  $("#idBlankLetter").on("hide.bs.modal", function (){
-    let findBlanks = document.querySelectorAll('[data-board="1"][data-letter="_"]'); //when data-baord is true and the letter is blank.
+  $("#idBlankLetter").on("hide.bs.modal", function () {
+    let findBlanks = document.querySelectorAll(
+      '[data-board="1"][data-letter="_"]'
+    ); //when data-baord is true and the letter is blank.
     for (let i = 0; i < findBlanks.length; i++) {
       //this blank does not have a letter defined with it, so it must be the letter that was played
       if (findBlanks[i].dataset.defLetter === undefined) {
@@ -539,7 +301,9 @@ $(function () {
         findBlanks[i].removeAttribute("data-y");
         findBlanks[i].removeAttribute("data-board");
         findBlanks[i].removeAttribute("data-defLetter");
-        document.querySelector("#idBlankLetter .alert-danger").style.visibility = 'hidden';
+        document.querySelector(
+          "#idBlankLetter .alert-danger"
+        ).style.visibility = "hidden";
         //hides modal when you click Submit for submission of the entered letter
         $("#idBlankLetter").modal("hide");
         return;
@@ -578,7 +342,8 @@ function tileSnap(left, top) {
 function drawTile() {
   let tileCount = 0;
   for (let i = 0; i < 27; i++) {
-    tileCount += ScrabbleTiles[Object.keys(ScrabbleTiles)[i]]["number-remaining"];
+    tileCount +=
+      ScrabbleTiles[Object.keys(ScrabbleTiles)[i]]["number-remaining"];
   }
 
   if (tileCount === 0) {
@@ -597,7 +362,7 @@ function drawTile() {
     }
   }
 
-  if (letter === undefined){
+  if (letter === undefined) {
     return null;
   }
 
@@ -611,11 +376,11 @@ function drawTile() {
 
 function validateMove(x, y, letter) {
   if (letter.attr("data-x") !== undefined) {
-    return "You cannot move a tile once it is place. Please click RECALL tiles to start again."
+    return "You cannot move a tile once it is place. Please click RECALL tiles to start again.";
   }
 
   //no coordinate means it is being moved to the tray
-  if (x === undefined || y === undefined){
+  if (x === undefined || y === undefined) {
     return null;
   }
 
@@ -632,12 +397,12 @@ function validateMove(x, y, letter) {
   }
 
   if (currentPlays.length === 0) {
-    if (!validateAdjacent(x,y)) {
+    if (!validateAdjacent(x, y)) {
       return "Please play next to an existing tile.";
     }
   } else {
     //play in a line next to an existing tile.
-    if (!validateAdjacent(x,y)) {
+    if (!validateAdjacent(x, y)) {
       return "Please play next to an existing tile.";
     }
 
@@ -647,11 +412,11 @@ function validateMove(x, y, letter) {
     if (currentPlays[0].x === x) {
       lineDirection = "x";
       lineValue = x;
-      wordError = validateVerticalWord(x,y);
+      wordError = validateVerticalWord(x, y);
     } else if (currentPlays[0].y === y) {
       lineDirection = "y";
       lineValue = y;
-      wordError = validateHorizontalWord(x,y);
+      wordError = validateHorizontalWord(x, y);
     } else {
       return "Please play your tiles in a line.";
     }
@@ -669,7 +434,7 @@ function validateMove(x, y, letter) {
   return null;
 }
 
-function validateHorizontalWord(x,y) {
+function validateHorizontalWord(x, y) {
   let positions = [];
   let i;
 
@@ -699,7 +464,7 @@ function validateHorizontalWord(x,y) {
   return null;
 }
 
-function validateVerticalWord(x,y) {
+function validateVerticalWord(x, y) {
   let positions = [];
   let i;
 
@@ -767,7 +532,7 @@ function setUpTray() {
 }
 
 //if given an x or an y, it checks if it is adjacent to a play tile
-function validateAdjacent(x,y) {
+function validateAdjacent(x, y) {
   //there exists a tile to the left, return true
   if (x > 0 && boardState[x - 1][y]) {
     return true;
@@ -793,31 +558,31 @@ function validateAdjacent(x,y) {
 
 //called to set the appropriate error for the wrong move
 function setError(error) {
-  if (error === undefined){
-    document.querySelector('#errorPopUp').style.visibility = 'hidden';
+  if (error === undefined) {
+    document.querySelector("#errorPopUp").style.visibility = "hidden";
     return;
   }
-  document.querySelector('#errorPopUp p').innerText = error;
-  document.querySelector('#errorPopUp').style.visibility = 'visible';
+  document.querySelector("#errorPopUp p").innerText = error;
+  document.querySelector("#errorPopUp").style.visibility = "visible";
 }
 
-function scoreLetter(x,y) {
+function scoreLetter(x, y) {
   let letter = boardState[x][y];
   let score = ScrabbleTiles[letter].value;
 
-  if (justPlayed(x,y)) {
-    let bonus = isBonus(x,y);
-    if (bonus === 'tripLetter') {
+  if (justPlayed(x, y)) {
+    let bonus = isBonus(x, y);
+    if (bonus === "tripLetter") {
       score *= 3;
-    } else if (bonus === 'doubLetter') {
+    } else if (bonus === "doubLetter") {
       score *= 2;
     }
   }
   return score;
 }
 
-function scoreHorizontalWord(x,y) {
-  let score = scoreLetter(x,y);
+function scoreHorizontalWord(x, y) {
+  let score = scoreLetter(x, y);
 
   //score letters to the left from the start position
   for (let i = x - 1; i >= 0; i--) {
@@ -825,7 +590,7 @@ function scoreHorizontalWord(x,y) {
     if (!boardState[i][y]) {
       break;
     }
-    score += scoreLetter(i,y);
+    score += scoreLetter(i, y);
   }
 
   //score letters to the right from the start position
@@ -834,7 +599,7 @@ function scoreHorizontalWord(x,y) {
     if (!boardState[i][y]) {
       break;
     }
-    score += scoreLetter(i,y);
+    score += scoreLetter(i, y);
   }
 
   //looking for WORD bonuses to the left from start position
@@ -844,11 +609,11 @@ function scoreHorizontalWord(x,y) {
       break;
     }
 
-    if (justPlayed(i,y)) {
-      let bonus = isBonus(i,y);
-      if (bonus === 'tripWord') {
+    if (justPlayed(i, y)) {
+      let bonus = isBonus(i, y);
+      if (bonus === "tripWord") {
         score *= 3;
-      } else if (bonus === 'doubWord') {
+      } else if (bonus === "doubWord") {
         score *= 2;
       }
     }
@@ -861,11 +626,11 @@ function scoreHorizontalWord(x,y) {
       break;
     }
 
-    if (justPlayed(i,y)) {
-      let bonus = isBonus(i,y);
-      if (bonus === 'tripWord') {
+    if (justPlayed(i, y)) {
+      let bonus = isBonus(i, y);
+      if (bonus === "tripWord") {
         score *= 3;
-      } else if (bonus === 'doubWord') {
+      } else if (bonus === "doubWord") {
         score *= 2;
       }
     }
@@ -874,8 +639,8 @@ function scoreHorizontalWord(x,y) {
   return score;
 }
 
-function scoreVerticalWord(x,y) {
-  let score = scoreLetter(x,y);
+function scoreVerticalWord(x, y) {
+  let score = scoreLetter(x, y);
 
   //score letters to the top from the start position
   for (let i = y - 1; i >= 0; i--) {
@@ -883,7 +648,7 @@ function scoreVerticalWord(x,y) {
     if (!boardState[x][i]) {
       break;
     }
-    score += scoreLetter(x,i);
+    score += scoreLetter(x, i);
   }
 
   //score letters to the bottom from the start position
@@ -892,7 +657,7 @@ function scoreVerticalWord(x,y) {
     if (!boardState[x][i]) {
       break;
     }
-    score += scoreLetter(x,i);
+    score += scoreLetter(x, i);
   }
 
   //looking for WORD bonuses to the top from start position
@@ -902,11 +667,11 @@ function scoreVerticalWord(x,y) {
       break;
     }
 
-    if (justPlayed(x,i)) {
-      let bonus = isBonus(x,i);
-      if (bonus === 'tripWord') {
+    if (justPlayed(x, i)) {
+      let bonus = isBonus(x, i);
+      if (bonus === "tripWord") {
         score *= 3;
-      } else if (bonus === 'doubWord') {
+      } else if (bonus === "doubWord") {
         score *= 2;
       }
     }
@@ -919,11 +684,11 @@ function scoreVerticalWord(x,y) {
       break;
     }
 
-    if (justPlayed(x,i)) {
-      let bonus = isBonus(x,i);
-      if (bonus === 'tripWord') {
+    if (justPlayed(x, i)) {
+      let bonus = isBonus(x, i);
+      if (bonus === "tripWord") {
         score *= 3;
-      } else if (bonus === 'doubWord') {
+      } else if (bonus === "doubWord") {
         score *= 2;
       }
     }
@@ -939,29 +704,35 @@ function scorePlay() {
     //checks if the letters are being played in a vertical line
     if (currentPlays[0].x === currentPlays[1].x) {
       score += scoreVerticalWord(currentPlays[0].x, currentPlays[0].y); //if true word is played vertically so call this
-      playDirection = 'vertical';
+      playDirection = "vertical";
     } else {
       score += scoreHorizontalWord(currentPlays[0].x, currentPlays[0].y); //if false word is played horizontally so call this
-      playDirection = 'horizontal';
+      playDirection = "horizontal";
     }
   } else {
-    if(isHorizontalWord(currentPlays[0].x, currentPlays[0].y)) {
+    if (isHorizontalWord(currentPlays[0].x, currentPlays[0].y)) {
       score += scoreHorizontalWord(currentPlays[0].x, currentPlays[0].y); //if false word is played horizontally so call this
-      playDirection = 'horizontal';
+      playDirection = "horizontal";
     } else {
       score += scoreVerticalWord(currentPlays[0].x, currentPlays[0].y); //if true word is played vertically so call this
-      playDirection = 'vertical';
+      playDirection = "vertical";
     }
   }
 
-  for(let i = 0; i < currentPlays.length; i++){
+  for (let i = 0; i < currentPlays.length; i++) {
     //checking if we scored vertically already. if yes, score the horizontal word
-    if(playDirection === 'vertical' && isHorizontalWord(currentPlays[i].x, currentPlays[i].y)) {
+    if (
+      playDirection === "vertical" &&
+      isHorizontalWord(currentPlays[i].x, currentPlays[i].y)
+    ) {
       score += scoreHorizontalWord(currentPlays[i].x, currentPlays[i].y);
     }
     //checking if we scored horizontally already. if yes, score the vericsl word
-    if(playDirection === 'horizontal' && isVerticalWord(currentPlays[i].x, currentPlays[i].y)) {
-        score += scoreVerticalWord(currentPlays[i].x, currentPlays[i].y);
+    if (
+      playDirection === "horizontal" &&
+      isVerticalWord(currentPlays[i].x, currentPlays[i].y)
+    ) {
+      score += scoreVerticalWord(currentPlays[i].x, currentPlays[i].y);
     }
   }
 
@@ -969,7 +740,7 @@ function scorePlay() {
 }
 
 //to check if there is a tile to the left or right of the given coordinate
-function isHorizontalWord(x,y) {
+function isHorizontalWord(x, y) {
   //there exists a tile to the left, return true
   if (x > 0 && boardState[x - 1][y]) {
     return true;
@@ -983,7 +754,7 @@ function isHorizontalWord(x,y) {
   return false;
 }
 
-function isVerticalWord(x,y) {
+function isVerticalWord(x, y) {
   //there exist a tile to the bottom, return true
   if (y > 0 && boardState[x][y - 1]) {
     return true;
@@ -998,7 +769,7 @@ function isVerticalWord(x,y) {
 }
 
 // checks the coordinates for word bonuses
-function isBonus(x,y) {
+function isBonus(x, y) {
   //checks for triple word bonus
   if (
     (x == 0 && y == 0) ||
@@ -1010,7 +781,7 @@ function isBonus(x,y) {
     (x == 14 && y == 7) ||
     (x == 14 && y == 14)
   ) {
-    return 'tripWord';
+    return "tripWord";
   }
 
   //checks for double word bonus
@@ -1033,10 +804,10 @@ function isBonus(x,y) {
     (x == 13 && y == 1) ||
     (x == 13 && y == 13)
   ) {
-    return 'doubWord';
+    return "doubWord";
   }
 
- //checks for triple letter bonus
+  //checks for triple letter bonus
   if (
     (x == 1 && y == 5) ||
     (x == 1 && y == 9) ||
@@ -1051,7 +822,7 @@ function isBonus(x,y) {
     (x == 13 && y == 5) ||
     (x == 13 && y == 9)
   ) {
-    return 'tripLetter';
+    return "tripLetter";
   }
 
   //checks for double letter bonus
@@ -1081,19 +852,19 @@ function isBonus(x,y) {
     (x == 14 && y == 3) ||
     (x == 14 && y == 11)
   ) {
-    return 'doubLetter';
+    return "doubLetter";
   }
 
   return null;
 }
 
-function justPlayed(x,y) {
-  for(let i = 0; i < currentPlays.length; i++) {
-    if(currentPlays[i].x === x && currentPlays[i].y === y) {
+function justPlayed(x, y) {
+  for (let i = 0; i < currentPlays.length; i++) {
+    if (currentPlays[i].x === x && currentPlays[i].y === y) {
       return true;
     }
   }
-  return false
+  return false;
 }
 
 function recallTiles() {
@@ -1139,8 +910,8 @@ function resetGame() {
   setUpTiles(); //makes the tiles interactive
 
   //reset the board
-  for (i = 0; i < 15; i++){
-    for(let j = 0; j < 15; j++){
+  for (i = 0; i < 15; i++) {
+    for (let j = 0; j < 15; j++) {
       boardState[i][j] = null;
     }
   }
@@ -1159,7 +930,10 @@ function swapTile(oldLetter) {
 
   ScrabbleTiles[oldLetter.dataset.letter]["number-remaining"]++; //increments the letter added back into the bag
   let lrtd = document.querySelector("#lrTable .lr-" + oldLetter.dataset.letter);
-  lrtd.innerText = oldLetter.dataset.letter + ": " + ScrabbleTiles[oldLetter.dataset.letter ]["number-remaining"];
+  lrtd.innerText =
+    oldLetter.dataset.letter +
+    ": " +
+    ScrabbleTiles[oldLetter.dataset.letter]["number-remaining"];
   oldLetter.dataset.letter = newLetter; //tracks where the letter is for scoring
   oldLetter.src = "graphics_data/letters/Scrabble_Tile_" + newLetter + ".jpg";
 }
@@ -1168,35 +942,68 @@ function defBlankLetter() {
   let blankLetter = document.querySelector("#idLetter");
   let value = blankLetter.value.toUpperCase();
 
-  if (value === 'A' || value === 'B' || value === 'C' ||
-      value === 'D' || value === 'E' || value === 'F' ||
-      value === 'G' || value === 'H' || value === 'I' ||
-      value === 'J' || value === 'K' || value === 'L' ||
-      value === 'M' || value === 'N' || value === 'O' ||
-      value === 'P' || value === 'Q' || value === 'R' ||
-      value === 'S' || value === 'T' || value === 'U' ||
-      value === 'V' || value === 'W' || value === 'X' ||
-      value === 'Y' || value === 'Z'
+  if (
+    value === "A" ||
+    value === "B" ||
+    value === "C" ||
+    value === "D" ||
+    value === "E" ||
+    value === "F" ||
+    value === "G" ||
+    value === "H" ||
+    value === "I" ||
+    value === "J" ||
+    value === "K" ||
+    value === "L" ||
+    value === "M" ||
+    value === "N" ||
+    value === "O" ||
+    value === "P" ||
+    value === "Q" ||
+    value === "R" ||
+    value === "S" ||
+    value === "T" ||
+    value === "U" ||
+    value === "V" ||
+    value === "W" ||
+    value === "X" ||
+    value === "Y" ||
+    value === "Z"
   ) {
-      let findBlanks = document.querySelectorAll('[data-board="1"][data-letter="_"]'); //when data-baord is true and the letter is blank.
-      for (let i = 0; i < findBlanks.length; i++) {
-        //this blank does not have a letter defined with it, so it must be the letter that was played
-        if (findBlanks[i].dataset.defLetter === undefined) {
-          findBlanks[i].dataset.defLetter = value;
-          document.querySelector("#idBlankLetter .alert-danger").style.visibility = 'hidden';
-          //hides modal when you click Submit for submission of the entered letter
-          $("#idBlankLetter").modal("hide");
-          return;
-        }
+    let findBlanks = document.querySelectorAll(
+      '[data-board="1"][data-letter="_"]'
+    ); //when data-baord is true and the letter is blank.
+    for (let i = 0; i < findBlanks.length; i++) {
+      //this blank does not have a letter defined with it, so it must be the letter that was played
+      if (findBlanks[i].dataset.defLetter === undefined) {
+        findBlanks[i].dataset.defLetter = value;
+        document.querySelector(
+          "#idBlankLetter .alert-danger"
+        ).style.visibility = "hidden";
+        //hides modal when you click Submit for submission of the entered letter
+        $("#idBlankLetter").modal("hide");
+        return;
       }
     }
-  document.querySelector("#idBlankLetter .alert-danger").innerText = "That is not a valid letter.";
-  document.querySelector("#idBlankLetter .alert-danger").style.visibility = 'visible';
+  }
+  document.querySelector("#idBlankLetter .alert-danger").innerText =
+    "That is not a valid letter.";
+  document.querySelector("#idBlankLetter .alert-danger").style.visibility =
+    "visible";
 }
 
-function getWords(){
-  $.get('https://tammyliuxd.github.io/Graphical-User-Interface/HW%208/words.txt').done(function(resp) {
-    words = resp.split("\n").filter(function(el) {return el.length !== 0;}).map(function(el) {return el.toUpperCase();}); //split into a list of words, filtering empty strings out of the list
+function getWords() {
+  $.get(
+    "https://tammyliuxd.github.io/Graphical-User-Interface/HW%208/words.txt"
+  ).done(function (resp) {
+    words = resp
+      .split("\n")
+      .filter(function (el) {
+        return el.length !== 0;
+      })
+      .map(function (el) {
+        return el.toUpperCase();
+      }); //split into a list of words, filtering empty strings out of the list
   });
 }
 
@@ -1207,37 +1014,55 @@ function checkWords() {
   if (currentPlays.length > 1) {
     //checks if the letters are being played in a vertical line
     if (currentPlays[0].x === currentPlays[1].x) {
-      invalid = invalid.concat(checkVerticalWord(currentPlays[0].x, currentPlays[0].y)); //if true word is played vertically so call this
-      playDirection = 'vertical';
+      invalid = invalid.concat(
+        checkVerticalWord(currentPlays[0].x, currentPlays[0].y)
+      ); //if true word is played vertically so call this
+      playDirection = "vertical";
     } else {
-      invalid = invalid.concat(checkHorizontalWord(currentPlays[0].x, currentPlays[0].y)); //if false word is played horizontally so call this
-      playDirection = 'horizontal';
+      invalid = invalid.concat(
+        checkHorizontalWord(currentPlays[0].x, currentPlays[0].y)
+      ); //if false word is played horizontally so call this
+      playDirection = "horizontal";
     }
   } else {
-    if(isHorizontalWord(currentPlays[0].x, currentPlays[0].y)) {
-      invalid = invalid.concat(checkHorizontalWord(currentPlays[0].x, currentPlays[0].y)); //if false word is played horizontally so call this
-      playDirection = 'horizontal';
+    if (isHorizontalWord(currentPlays[0].x, currentPlays[0].y)) {
+      invalid = invalid.concat(
+        checkHorizontalWord(currentPlays[0].x, currentPlays[0].y)
+      ); //if false word is played horizontally so call this
+      playDirection = "horizontal";
     } else {
-      invalid = invalid.concat(checkVerticalWord(currentPlays[0].x, currentPlays[0].y)); //if true word is played vertically so call this
-      playDirection = 'vertical';
+      invalid = invalid.concat(
+        checkVerticalWord(currentPlays[0].x, currentPlays[0].y)
+      ); //if true word is played vertically so call this
+      playDirection = "vertical";
     }
   }
 
-  for(let i = 0; i < currentPlays.length; i++){
+  for (let i = 0; i < currentPlays.length; i++) {
     //checking if we checked vertically already. if yes, check the horizontal word
-    if(playDirection === 'vertical' && isHorizontalWord(currentPlays[i].x, currentPlays[i].y)) {
-      invalid = invalid.concat(checkHorizontalWord(currentPlays[i].x, currentPlays[i].y));
+    if (
+      playDirection === "vertical" &&
+      isHorizontalWord(currentPlays[i].x, currentPlays[i].y)
+    ) {
+      invalid = invalid.concat(
+        checkHorizontalWord(currentPlays[i].x, currentPlays[i].y)
+      );
     }
     //checking if we checked horizontally already. if yes, check the verical word
-    if(playDirection === 'horizontal' && isVerticalWord(currentPlays[i].x, currentPlays[i].y)) {
-      invalid = invalid.concat(checkVerticalWord(currentPlays[i].x, currentPlays[i].y));
+    if (
+      playDirection === "horizontal" &&
+      isVerticalWord(currentPlays[i].x, currentPlays[i].y)
+    ) {
+      invalid = invalid.concat(
+        checkVerticalWord(currentPlays[i].x, currentPlays[i].y)
+      );
     }
   }
 
   return invalid;
 }
 
-function checkHorizontalWord(x,y) {
+function checkHorizontalWord(x, y) {
   let word = boardState[x][y];
 
   for (let i = x - 1; i >= 0; i--) {
@@ -1256,14 +1081,14 @@ function checkHorizontalWord(x,y) {
     word = word + boardState[i][y]; //appending the next letter onto the end of the word
   }
 
-  if(words.indexOf(word) === -1) {
+  if (words.indexOf(word) === -1) {
     return [word];
   }
 
   return [];
 }
 
-function checkVerticalWord(x,y) {
+function checkVerticalWord(x, y) {
   let word = boardState[x][y];
 
   for (let i = y - 1; i >= 0; i--) {
@@ -1274,7 +1099,7 @@ function checkVerticalWord(x,y) {
     word = boardState[x][i] + word; //prepending the next letter onto the start of the word
   }
 
-  for (let i = y+ 1; i <= 14; i++) {
+  for (let i = y + 1; i <= 14; i++) {
     //board is empty, stop looking in this direction
     if (!boardState[x][i]) {
       break;
@@ -1282,7 +1107,7 @@ function checkVerticalWord(x,y) {
     word = word + boardState[x][i]; //appending the next letter onto the end of the word
   }
 
-  if(words.indexOf(word) === -1) {
+  if (words.indexOf(word) === -1) {
     return [word];
   }
 
