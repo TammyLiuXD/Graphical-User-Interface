@@ -445,14 +445,15 @@ function validateMove(x, y, letter) {
       return "Please play your tile in a line next to your previously played tile.";
     }
 
-    //if the above checks fail, we return the wordError Statement.
+    //if the above checks fail, we return the wordError Statement
     if (wordError) {
       return wordError;
     }
 
+    //handles if the user has played several tiles in one direction and then deviates away from the previous direction
     for (let i = 0; i < currentPlays.length; i++) {
       if (currentPlays[i][lineDirection] !== lineValue) {
-        return "Please play your tiles in a line!";
+        return "Please play your tile in the same direction as your previously played tiles.";
       }
     }
   }
