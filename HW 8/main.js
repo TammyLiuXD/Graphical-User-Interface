@@ -4,7 +4,7 @@
   Affliation: University of Massachusetts Lowell Computer Science Student
   File: cs.uml.edu/~tliu/HW5
   COMP.4610-201 (91.61) GUI Programming I Assignment: Implementing a Bit of Scrabble with Drag-and-Drop
-  source: getbootstrap.com, bootswatch.com, css-tricks.com, youtube.com (Brad Traversy), jqueryvalidation.org, Jesse M. Heines (heines@cs.uml.edu), stackoverflow.com
+  Sources: getbootstrap.com, bootswatch.com, css-tricks.com, youtube.com (Brad Traversy), w3schools.com, jqueryvalidation.org, https://jesseheines.com/~heines/, stackoverflow.com
 */
 
 function buildTiles() {
