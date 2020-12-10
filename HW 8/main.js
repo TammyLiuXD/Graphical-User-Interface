@@ -149,6 +149,7 @@ function buildTiles() {
 
 let ScrabbleTiles = buildTiles();
 
+//array list where each null which represents each square of the board
 let boardState = [
   [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
@@ -226,6 +227,7 @@ $(function () {
     drop: function (event, ui) {
       let error = validateMove(undefined, undefined, ui.helper);
 
+      //checks for the error to set it
       if (error !== null) {
         setError(error);
         ui.helper.draggable("option", "revert", true);
@@ -243,7 +245,9 @@ $(function () {
     },
   });
 
+  //handles what happens when user clicks the submit button
   document.querySelector("#submit").addEventListener("click", function () {
+    //checks if user has played a tile
     if (currentPlays.length === 0) {
       setError("You have not played any tiles.");
       return;
@@ -251,15 +255,18 @@ $(function () {
 
     let invalidWords = checkWords();
 
+    //if there is an invalid word, print error
     if (invalidWords.length !== 0) {
       setError("These are not valid words: " + invalidWords.join(", ")); //takes a list and joins them
       return;
     }
 
-    totalScore += scorePlay();
-    document.querySelector(".scoreWord").innerText = "Score: " + totalScore;
+    totalScore += scorePlay(); //keeps track of the score
+
+    document.querySelector(".scoreWord").innerText = "Score: " + totalScore; //prints the score
     let playedTiles = document.querySelectorAll("[data-board='1']");
 
+    //once the letter is played on the board you cannot drag it off the board
     for (let i = 0; i < playedTiles.length; i++) {
       playedTiles[i].removeAttribute("data-board");
       playedTiles[i].className = "played-letter";
@@ -273,6 +280,7 @@ $(function () {
       remainingTiles[i].style = "";
     }
 
+    //draws more tiles and create the appropriate elements for the new tiles drawn to show on the website after the submit button is clicked
     for (let i = remainingTiles.length; i < 7; i++) {
       letter = drawTile();
       if (letter === null) {
@@ -289,8 +297,11 @@ $(function () {
     setUpTiles();
   });
 
+  //recalls tile after the recall button is clicked
   document.querySelector("#recall").addEventListener("click", recallTiles);
+  //resets game after the reset button is clicked
   document.querySelector("#startOver").addEventListener("click", resetGame);
+  //assigned the letter inputted by the user to the blank tile played once user hits the submit button on the modal
   document
     .querySelector("#subLetter")
     .addEventListener("click", defBlankLetter);
@@ -306,7 +317,7 @@ $(function () {
       if (findBlanks[i].dataset.defLetter === undefined) {
         findBlanks[i].style = ""; //resets the letters
         findBlanks[i].removeAttribute("data-x"); //resets the x coordinate of the letter
-        findBlanks[i].removeAttribute("data-y");
+        findBlanks[i].removeAttribute("data-y"); //resets the y coordinate of the letter
         findBlanks[i].removeAttribute("data-board");
         findBlanks[i].removeAttribute("data-def-letter");
         document.querySelector(
@@ -365,7 +376,7 @@ function drawTile() {
     index -= ScrabbleTiles[Object.keys(ScrabbleTiles)[i]]["number-remaining"];
 
     if (index < 0) {
-      letter = Object.keys(ScrabbleTiles)[i]; // "A", "B", "C", etc.
+      letter = Object.keys(ScrabbleTiles)[i]; //"A", "B", "C", etc.
       break;
     }
   }
@@ -400,33 +411,38 @@ function validateMove(x, y, letter) {
     return null;
   }
 
+  //checks if there is already a tile on the square of the baord
   if (boardState[x][y] !== null) {
     return "There is already a tile on this square";
   }
 
   if (currentPlays.length === 0) {
+    //handles when the user wants to start their turn with playing a tile diagonally
     if (!validateAdjacent(x, y)) {
-      return "Please play next to an existing tile.";
+      return "You cannot play tiles diagonally. Please play tiles horizontally or vertically.";
     }
   } else {
-    //play in a line next to an existing tile.
     if (!validateAdjacent(x, y)) {
-      return "Please play next to an existing tile.";
+      //handles when the user wants play a tile diagonally
+      return "You cannot play tiles diagonally. Please play next to an existing tile.";
     }
 
     let lineDirection;
     let lineValue;
     let wordError = null;
+
+    //checks the if the tile is played vertically and the position of the tile
     if (currentPlays[0].x === x) {
       lineDirection = "x";
       lineValue = x;
       wordError = validateVerticalWord(x, y);
     } else if (currentPlays[0].y === y) {
+      //checks the if the tile is played horizontally and the position of the tile
       lineDirection = "y";
       lineValue = y;
       wordError = validateHorizontalWord(x, y);
     } else {
-      return "Please play your tiles in a line.";
+      return "Please play your tile in a line next to your previously played tile.";
     }
 
     //if the above checks fail, we return the wordError Statement.
@@ -443,6 +459,7 @@ function validateMove(x, y, letter) {
   return null;
 }
 
+//validate whether the letter is played the horizontally
 function validateHorizontalWord(x, y) {
   let positions = [];
   let i;
@@ -473,6 +490,7 @@ function validateHorizontalWord(x, y) {
   return null;
 }
 
+//validate whether the letter is played the vertically
 function validateVerticalWord(x, y) {
   let positions = [];
   let i;
@@ -529,6 +547,7 @@ function setUpTiles() {
 function setUpTray() {
   let letter;
   let img;
+
   //used to get seven random tiles
   for (let i = 1; i <= 7; i++) {
     letter = drawTile();
@@ -575,6 +594,7 @@ function setError(error) {
   document.querySelector("#errorPopUp").style.visibility = "visible";
 }
 
+//used to score the letter played on a triple letter or double letter bonus square
 function scoreLetter(x, y) {
   let letter = boardState[x][y];
   let score = ScrabbleTiles[letter].value;
@@ -590,6 +610,7 @@ function scoreLetter(x, y) {
   return score;
 }
 
+//scores the word played horizontally
 function scoreHorizontalWord(x, y) {
   let score = scoreLetter(x, y);
 
@@ -648,6 +669,7 @@ function scoreHorizontalWord(x, y) {
   return score;
 }
 
+//scores the word played vertically
 function scoreVerticalWord(x, y) {
   let score = scoreLetter(x, y);
 
@@ -706,6 +728,7 @@ function scoreVerticalWord(x, y) {
   return score;
 }
 
+//scores the words played on the board based on the direction it has been played and tallies up the scores
 function scorePlay() {
   let playDirection;
   let score = 0;
@@ -765,6 +788,7 @@ function isHorizontalWord(x, y) {
   return false;
 }
 
+//to check if there is a tile to the top or bottom of the given coordinate
 function isVerticalWord(x, y) {
   //there exist a tile to the bottom, return true
   if (y > 0 && boardState[x][y - 1]) {
@@ -779,7 +803,7 @@ function isVerticalWord(x, y) {
   return false;
 }
 
-// checks the coordinates for word bonuses
+//checks the coordinates for word bonuses
 function isBonus(x, y) {
   //checks for triple word bonus
   if (
@@ -878,6 +902,7 @@ function justPlayed(x, y) {
   return false;
 }
 
+//recalls the tiles placed on the board
 function recallTiles() {
   let letters = document.querySelectorAll(".letter");
   let i;
@@ -885,7 +910,7 @@ function recallTiles() {
   for (i = 0; i < letters.length; i++) {
     letters[i].style = ""; //resets the letters
     letters[i].removeAttribute("data-x"); //resets the x coordinate of the letter
-    letters[i].removeAttribute("data-y");
+    letters[i].removeAttribute("data-y"); //resets the x coordinate of the letter
     letters[i].removeAttribute("data-board");
     letters[i].removeAttribute("data-def-letter");
   }
@@ -896,6 +921,7 @@ function recallTiles() {
   currentPlays = [];
 }
 
+//resets the board for a new game
 function resetGame() {
   //resets the ScrabbleTiles
   ScrabbleTiles = buildTiles();
@@ -934,9 +960,11 @@ function resetGame() {
   $("#confirmChange").modal("hide");
 }
 
+//swap a tile for a new one
 function swapTile(oldLetter) {
   let newLetter = drawTile();
 
+  //error message for when there is no more tiles
   if (newLetter === null) {
     setError("There are no more tiles.");
     return;
@@ -984,9 +1012,10 @@ function defBlankLetter() {
     value === "Y" ||
     value === "Z"
   ) {
+    //when data-baord is true and the letter is blank.
     let findBlanks = document.querySelectorAll(
       '[data-board="1"][data-letter="_"]'
-    ); //when data-baord is true and the letter is blank.
+    );
 
     for (let i = 0; i < findBlanks.length; i++) {
       //this blank does not have a letter defined with it, so it must be the letter that was played
@@ -1007,6 +1036,7 @@ function defBlankLetter() {
     "visible";
 }
 
+//gets the dictionary from a file located in my github server
 function getWords() {
   $.get(
     "https://tammyliuxd.github.io/Graphical-User-Interface/HW%208/words.txt"
@@ -1022,6 +1052,7 @@ function getWords() {
   });
 }
 
+//checks whether the word played is a real word
 function checkWords() {
   let playDirection;
   let invalid = [];
@@ -1077,6 +1108,7 @@ function checkWords() {
   return invalid;
 }
 
+//checks the horizontal word played
 function checkHorizontalWord(x, y) {
   let word = getLetter(x, y);
 
@@ -1104,6 +1136,7 @@ function checkHorizontalWord(x, y) {
   return [];
 }
 
+//checks the vertical word played
 function checkVerticalWord(x, y) {
   let word = getLetter(x, y);
 
@@ -1130,8 +1163,9 @@ function checkVerticalWord(x, y) {
   return [];
 }
 
+//gets the letter entered by the user to assign to the blank tile
 function getLetter(x, y) {
-  //check is the tile is _
+  //check if the tile is _
   if(boardState[x][y] !== "_"){
     return boardState[x][y];
   }
